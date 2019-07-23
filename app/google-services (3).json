@@ -1,0 +1,42 @@
+{
+  "project_info": {
+    "project_number": "886566641577",
+    "firebase_url": "https://berrycoffeebardrinks.firebaseio.com",
+    "project_id": "berrycoffeebardrinks",
+    "storage_bucket": "berrycoffeebardrinks.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:886566641577:android:b9c09a7ecc72c40a",
+        "android_client_info": {
+          "package_name": "com.example.vavasimo.BerryCoffeeBarDrinks"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "886566641577-2bv1pfvh0hcsi3e05cgvspv6dv5bp4lh.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyB_49Q5qm9hEVBYSfE0B2Q2n15E-Zwj-Tc"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

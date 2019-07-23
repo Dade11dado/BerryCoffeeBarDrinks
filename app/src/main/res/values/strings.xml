@@ -1,0 +1,47 @@
+<resources>
+    <string name="app_name">Berry Coffee Bar &amp; Drinks</string>
+    <string name="aperitivi_in_omaggio">Aperitivi in omaggio:</string>
+    <string name="berry_coffee_bar_drinks"><![CDATA[BERRY Coffee Bar & Drinks]]></string>
+    <string name="reset_conteggio">Reset Conteggio</string>
+    <string name="_0">0</string>
+    <string name="berry_app">BerryCoffee</string>
+    <string name="salva">SALVA</string>
+    <string name="descrizioone">Aperitivi in omaggio</string>
+    <string name="berry">BERRY</string>
+    <string name="coffee_bar_drinks"><![CDATA[Coffee Bar & Drinks]]></string>
+    <string name="effettua_il_login_per_accedere">Effettua il login per accedere</string>
+    <string name="alla_tua_tessera_aperitivi">alla tua tessera aperitivi</string>
+    <string name="mail">Mail</string>
+    <string name="password">Password</string>
+    <string name="login">LogIn</string>
+    <string name="non_sei_registrato">Non sei registrato?</string>
+    <string name="registrati_ora">Registrati ora</string>
+    <string name="per_accedere_alla_tua_tessera_aperitivi">Per accedere alla tua tessera aperitivi</string>
+    <string name="nome">Nome</string>
+    <string name="ripeti_password">Ripeti password</string>
+    <string name="registrati">Registrati</string>
+    <string name="gi_registrato">Già registrato?</string>
+    <string name="logout">Logout</string>
+    <string name="todo">TODO</string>
+    <string name="benvenuto">Benvenuto</string>
+    <string name="ripristinala_ora">Ripristinala ora</string>
+    <string name="hai_dimenticato_la_password">Hai dimenticato la password?</string>
+    <string name="channel_1_id">Aperitivi</string>
+    <string name="descizione_notifica">Ricevi una notifica quando hai un aperitivo in omaggio</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="recupera_ora_la_tua_password">Recupera ora la tua password</string>
+    <string name="inserisci_la_tua_mail_per_recuperare_la_password">Inserisci la tua mail per recuperare la password</string>
+    <string name="recupera">Recupera</string>
+    <string name="accendi_torcia">accendi torcia</string>
+    <string name="btn8">btn8</string>
+    <string name="string_btn8" />
+    <string name="btn7">btn7</string>
+    <string name="btn6">btn6</string>
+    <string name="btn5">btn5</string>
+    <string name="btn4">btn4</string>
+    <string name="btn3">btn3</string>
+    <string name="btn2">btn2</string>
+    <string name="btn1">btn1</string>
+    <string name="btn9">btn9</string>
+</resources>

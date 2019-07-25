@@ -116,8 +116,8 @@ public class ActivityClienti extends AppCompatActivity{
     }
 
         private void showData (ButtonInformation buttonInformation){
-        sendNotiufication=buttonInformation.getSendNotification();
-        Numero=buttonInformation.getApeOmaggio();
+           try{ sendNotiufication=buttonInformation.getSendNotification();
+            Numero=buttonInformation.getApeOmaggio();}catch(NullPointerException e){Log.e ("Errore","annulla");}
         try{
         if (buttonInformation.getButton1() == true) {
             btn1=true;
@@ -235,6 +235,7 @@ public class ActivityClienti extends AppCompatActivity{
                 .setPriority(NotificationCompat.PRIORITY_DEFAULT)
                 .setContentIntent(pendingIntent)
                 .setAutoCancel(true)
+                .setContentIntent(pendingIntent)
                 .setStyle(new NotificationCompat.BigTextStyle()
                 .bigText("Passa al Berry Coffee Bar & Drink e riscuoti il tuo aperitivo in omaggio"));
 

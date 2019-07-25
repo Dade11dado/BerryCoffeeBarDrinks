@@ -17,6 +17,7 @@ import android.widget.EditText;
 import android.widget.Switch;
 import android.widget.Toast;
 
+import com.example.vavasimo.berrycoffeebardrinks.Model.ButtonInformation;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
@@ -28,6 +29,8 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.example.vavasimo.berrycoffeebardrinks.Model.ButtonInformationSend;
+
+import java.util.Map;
 
 import static com.example.vavasimo.berrycoffeebardrinks.Model.Notification.CHANNEL_1_ID;
 import static com.example.vavasimo.berrycoffeebardrinks.Model.Notification.CHANNEL_2_ID;
@@ -45,7 +48,7 @@ public class LogInActivity extends AppCompatActivity {
     Switch ShowPassword;
     FirebaseDatabase mDatabase;
     DatabaseReference myRef;
-    String testoNotifica;
+    String testoNotifica, nTestoNotifica;
     NotificationManagerCompat notificationManager;
     private int notificationID1 = 0;
 
@@ -55,7 +58,6 @@ public class LogInActivity extends AppCompatActivity {
     @Override
     protected void onStop() {
         super.onStop();
-        creaNotifica();
     }
 
     @Override
@@ -72,12 +74,12 @@ public class LogInActivity extends AppCompatActivity {
         button = findViewById(R.id.buttonLog);
         ShowPassword=(Switch)findViewById(R.id.switch1);
         mDatabase=FirebaseDatabase.getInstance();
-        myRef=mDatabase.getReference("TestoNotifica");
+        myRef=mDatabase.getReference();
         myRef.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                ButtonInformationSend buttonInformationSend = dataSnapshot.getValue(ButtonInformationSend.class);
-                testoNotifica=buttonInformationSend.getTestoNotifica();
+               ButtonInformationSend buttonInformationSend = dataSnapshot.getValue(ButtonInformationSend.class);
+               inizializzaVariabile(buttonInformationSend);
             }
 
             @Override
@@ -181,15 +183,15 @@ public class LogInActivity extends AppCompatActivity {
 
     public void ResetPassword(View view) {
         Intent Intent1 = new Intent(LogInActivity.this,RecuperoPassword.class);
-        finish();;
+        finish();
         startActivity(Intent1);
     }
-
-    public void prendoDati(ButtonInformationSend buttonInformationSend){
-        testoNotifica=buttonInformationSend.getTestoNotifica().toString();
+    public void inizializzaVariabile(ButtonInformationSend buttonInformationSend){
+        nTestoNotifica=buttonInformationSend.getTestoNotifica();
     }
+
     public void creaNotifica(){
-    if(testoNotifica!=null){
+    if(nTestoNotifica!=null){
         Intent intent = new Intent (this, ActivityClienti.class);
         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK|Intent.FLAG_ACTIVITY_CLEAR_TASK);
         PendingIntent pendingIntent = PendingIntent.getActivity(this, 0, intent ,0);
@@ -197,14 +199,16 @@ public class LogInActivity extends AppCompatActivity {
         NotificationCompat.Builder builder = new NotificationCompat.Builder(this, CHANNEL_2_ID)
                 .setSmallIcon(R.drawable.berry_icon)
                 .setContentTitle("Berry Coffe Bar & Drinks")
-                .setContentText(testoNotifica)
+                .setContentText(nTestoNotifica)
                 .setPriority(NotificationCompat.PRIORITY_DEFAULT)
                 .setContentIntent(pendingIntent)
                 .setAutoCancel(true)
                 .setStyle(new NotificationCompat.BigTextStyle()
-                        .bigText(testoNotifica));
+                        .bigText(nTestoNotifica));
 
         notificationManager.notify(notificationID1, builder.build()); }}
+
+
 
 
     }

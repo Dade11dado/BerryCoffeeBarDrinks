@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -59,7 +60,7 @@ public class ScannerActivity extends AppCompatActivity implements View.OnClickLi
 
 
         mDatabase=FirebaseDatabase.getInstance();
-        myRef=mDatabase.getReference("TestoNotifica");
+        myRef=mDatabase.getReference("Avviso");
     }
 
     @Override
@@ -110,6 +111,7 @@ public class ScannerActivity extends AppCompatActivity implements View.OnClickLi
 
     public void InviaNotifica(View view){
         notifica = editTextNotifica.getText().toString();
+        Log.i("Notifica",notifica);
         ButtonInformationSend data = new ButtonInformationSend(notifica);
         myRef.setValue(data);
     }

@@ -15,9 +15,11 @@ import android.widget.Button;
 import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.Switch;
+import android.widget.TextView;
 import android.widget.Toast;
 
-import com.example.vavasimo.berrycoffeebardrinks.Model.ButtonInformation;
+
+
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
@@ -28,11 +30,7 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
-import com.example.vavasimo.berrycoffeebardrinks.Model.ButtonInformationSend;
 
-import java.util.Map;
-
-import static com.example.vavasimo.berrycoffeebardrinks.Model.Notification.CHANNEL_1_ID;
 import static com.example.vavasimo.berrycoffeebardrinks.Model.Notification.CHANNEL_2_ID;
 
 
@@ -40,6 +38,7 @@ public class LogInActivity extends AppCompatActivity {
 
     //Dichiarazione variabili  membro
     private FirebaseAuth mAuth;
+    TextView Avviso;
     EditText mEmail;
     EditText mPassword;
     FirebaseUser user;
@@ -48,23 +47,19 @@ public class LogInActivity extends AppCompatActivity {
     Switch ShowPassword;
     FirebaseDatabase mDatabase;
     DatabaseReference myRef;
-    String testoNotifica, nTestoNotifica;
+    String testo;
     NotificationManagerCompat notificationManager;
-    private int notificationID1 = 0;
+    private int notificationID2 = 0;
 
     //Dichiarazione costanti
     public final String TAG = "LogInActivity";
 
     @Override
-    protected void onStop() {
-        super.onStop();
-    }
-
-    @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        notificationManager = NotificationManagerCompat.from(this);
+        Avviso = (TextView)findViewById(R.id.AvvisoTv);
         setContentView(R.layout.activity_login);
-        creaNotifica();
         //Inizializzazione FirebaseAuth
         mAuth=FirebaseAuth.getInstance();
         //Inizializzazione variabili
@@ -73,13 +68,16 @@ public class LogInActivity extends AppCompatActivity {
         user = mAuth.getCurrentUser();
         button = findViewById(R.id.buttonLog);
         ShowPassword=(Switch)findViewById(R.id.switch1);
-        mDatabase=FirebaseDatabase.getInstance();
-        myRef=mDatabase.getReference();
+        mDatabase = FirebaseDatabase.getInstance();
+        myRef=mDatabase.getReference("Avviso");
         myRef.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-               ButtonInformationSend buttonInformationSend = dataSnapshot.getValue(ButtonInformationSend.class);
-               inizializzaVariabile(buttonInformationSend);
+                String value = dataSnapshot.child("testoNotifica").getValue(String.class);
+                Log.i ("Testo", value);
+                Avviso.setText(value);
+                testo=value;
+
             }
 
             @Override
@@ -89,23 +87,17 @@ public class LogInActivity extends AppCompatActivity {
         });
 
 
-       ShowPassword.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-           @Override
-           public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-               if(isChecked){
-                   mPassword.setInputType(InputType.TYPE_TEXT_VARIATION_PASSWORD);
-               }else{
-                   mPassword.setInputType(129);
-               }
-           }
-       });
-
-
-
-
-
-
-
+                ShowPassword.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+                    @Override
+                    public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                        if (isChecked) {
+                            mPassword.setInputType(InputType.TYPE_TEXT_VARIATION_PASSWORD);
+                        } else {
+                            mPassword.setInputType(129);
+                        }
+                    }
+                });
+                creaNotifica();
     }
 
     @Override
@@ -113,6 +105,7 @@ public class LogInActivity extends AppCompatActivity {
         super.onStart();
         FirebaseUser currentUser = mAuth.getCurrentUser();
         updateUI(currentUser);
+        creaNotifica();
     }
 
     private void updateUI(FirebaseUser currentUser) {
@@ -186,32 +179,26 @@ public class LogInActivity extends AppCompatActivity {
         finish();
         startActivity(Intent1);
     }
-    public void inizializzaVariabile(ButtonInformationSend buttonInformationSend){
-        nTestoNotifica=buttonInformationSend.getTestoNotifica();
-    }
 
     public void creaNotifica(){
-    if(nTestoNotifica!=null){
-        Intent intent = new Intent (this, ActivityClienti.class);
+
+        Intent intent = new Intent (this, LogInActivity.class);
         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK|Intent.FLAG_ACTIVITY_CLEAR_TASK);
-        PendingIntent pendingIntent = PendingIntent.getActivity(this, 0, intent ,0);
+
+        PendingIntent pendingIntent = PendingIntent.getActivity(this, 0,intent,0);
 
         NotificationCompat.Builder builder = new NotificationCompat.Builder(this, CHANNEL_2_ID)
                 .setSmallIcon(R.drawable.berry_icon)
-                .setContentTitle("Berry Coffe Bar & Drinks")
-                .setContentText(nTestoNotifica)
+                .setContentTitle("Berry Coffee Bar & Drinks")
+                .setContentText(testo)
                 .setPriority(NotificationCompat.PRIORITY_DEFAULT)
                 .setContentIntent(pendingIntent)
                 .setAutoCancel(true)
-                .setStyle(new NotificationCompat.BigTextStyle()
-                        .bigText(nTestoNotifica));
+                .setStyle(new NotificationCompat.BigTextStyle().bigText(testo));
+        notificationManager.notify(notificationID2,builder.build());
 
-        notificationManager.notify(notificationID1, builder.build()); }}
+}}
 
-
-
-
-    }
 
 
 

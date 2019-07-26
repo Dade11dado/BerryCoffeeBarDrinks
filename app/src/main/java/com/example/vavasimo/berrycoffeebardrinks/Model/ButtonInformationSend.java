@@ -1,15 +1,14 @@
 package com.example.vavasimo.berrycoffeebardrinks.Model;
 
 public class ButtonInformationSend {
-
-    private String TestoNotifica;
+    private String NotificaAvviso;
 
     public ButtonInformationSend(){}
 
     public ButtonInformationSend(String testoNotifica){
-        TestoNotifica=testoNotifica;
+        NotificaAvviso=testoNotifica;
     }
 
-    public String getTestoNotifica(){return TestoNotifica;}
-    public void setTestoNotifica(String TestoNotifica){this.TestoNotifica= TestoNotifica;}
+    public String getTestoNotifica(){return NotificaAvviso;}
+    public void setTestoNotifica(String notificaAvviso){this.NotificaAvviso= notificaAvviso;}
 }

@@ -330,6 +330,7 @@ public class ActivityGestione extends AppCompatActivity {
              img7.setImageResource(R.drawable.radio_button);
              img8.setImageResource(R.drawable.radio_button);
              img9.setImageResource(R.drawable.radio_button);
+             sendNotification=false;
 
          }
      }

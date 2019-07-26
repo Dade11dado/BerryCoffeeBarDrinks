@@ -29,13 +29,13 @@ public class Notification extends Application {
 
         CharSequence name1 = getString(R.string.channel_1_id);
         String desciption1 = getString(R.string.descizione_notifica);
-        int importance = NotificationManager.IMPORTANCE_HIGH;
+        int importance = NotificationManager.IMPORTANCE_DEFAULT;
 
             NotificationChannel channel1 = new NotificationChannel(CHANNEL_1_ID,name1,importance);
             channel1.setDescription(desciption1);
 
-            CharSequence name2 = "Informazioni";
-            String desciption2 = "Ricevi informazioni sull'attività";
+            CharSequence name2 = getString(R.string.informazioni);
+            String desciption2 = getString(R.string.descrizioneAttivita);
             int importance1 = NotificationManager.IMPORTANCE_HIGH;
 
             NotificationChannel channel2 = new NotificationChannel(CHANNEL_2_ID,name2,importance1);

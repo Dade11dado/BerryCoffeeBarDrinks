@@ -76,7 +76,8 @@ public class ActivityClienti extends AppCompatActivity{
         mAuth = FirebaseAuth.getInstance();
         mFirebaseDatabase=FirebaseDatabase.getInstance();
         user = mAuth.getCurrentUser();
-        utenteLog=user.getDisplayName();
+        utenteLog=user.getDisplayName().toString();
+        Utente.setText(utenteLog);
         mail=user.getEmail();
         mailNoSpace=mail.replaceAll("\\.","=");
         Log.i("mailNoSpace",mailNoSpace);
@@ -96,7 +97,7 @@ public class ActivityClienti extends AppCompatActivity{
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 ButtonInformation buttonInformation = dataSnapshot.getValue(ButtonInformation.class);
                 showData(buttonInformation);
-                apeOmaggio=buttonInformation.getApeOmaggio();
+                creaNotifica(buttonInformation);
             }
 
             @Override
@@ -104,8 +105,6 @@ public class ActivityClienti extends AppCompatActivity{
 
             }
         });
-
-        creaNotifica();
     }
 
         private void showData (ButtonInformation buttonInformation){
@@ -209,17 +208,17 @@ public class ActivityClienti extends AppCompatActivity{
         ApeOmaggio.setText(Integer.toString(buttonInformation.getApeOmaggio()));}catch(NullPointerException e){
             Toast.makeText(this, "Benvenuto nella tua scheda utente",Toast.LENGTH_LONG).show();
         }
-    creaNotifica();
+
     }
 
-    private void creaNotifica() {
+    private void creaNotifica(ButtonInformation ape) {
         if (sendNotiufication==true){
         Intent intent = new Intent(this, LogInActivity.class);
         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK|Intent.FLAG_ACTIVITY_CLEAR_TASK);
         PendingIntent pendingIntent = PendingIntent.getActivity(this,0,intent,0);
         NotificationCompat.Builder builder = new NotificationCompat.Builder(this, CHANNEL_1_ID)
-                .setSmallIcon(R.drawable.berry_icon_tr)
-                .setContentTitle("Hai "+ apeOmaggio + " aperitivi in omaggio")
+                .setSmallIcon(R.drawable.berrywhiteicon)
+                .setContentTitle("Hai "+ ape.getApeOmaggio() + " aperitivi in omaggio")
                 .setContentText("Passa al berry a riscuotere i tuoi aperitivi")
                 .setPriority(NotificationCompat.PRIORITY_HIGH)
                 .setContentIntent(pendingIntent)

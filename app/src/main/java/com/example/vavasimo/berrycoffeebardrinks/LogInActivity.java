@@ -44,6 +44,7 @@ public class LogInActivity extends AppCompatActivity{
     EditText mEmail;
     EditText mPassword;
     FirebaseUser user;
+    String tornaSole;
     String email;
     Button button;
     Switch ShowPassword;
@@ -183,11 +184,12 @@ public class LogInActivity extends AppCompatActivity{
     }
 
     public void creaNotifica(ButtonInformationSend testo){
+        if(tornaSole!=testo.getTestoNotifica()){
         Intent intent = new Intent(this, LogInActivity.class);
         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK|Intent.FLAG_ACTIVITY_CLEAR_TASK);
         PendingIntent pendingIntent = PendingIntent.getActivity(this,0,intent,0);
         NotificationCompat.Builder builder = new NotificationCompat.Builder(this, CHANNEL_2_ID)
-                .setSmallIcon(R.drawable.berry_icon_tr)
+                .setSmallIcon(R.drawable.berrywhiteicon)
                 .setContentTitle("Berry Coffee Bar And Drinks")
                 .setContentText(testo.getTestoNotifica())
                 .setPriority(NotificationCompat.PRIORITY_HIGH)
@@ -196,6 +198,9 @@ public class LogInActivity extends AppCompatActivity{
                 .setStyle(new NotificationCompat.BigTextStyle().bigText(testo.getTestoNotifica()));
         notificationManager.notify(notificationID2,builder.build());
         Log.i("Aiuto","La notifica funziona");
+        tornaSole=testo.getTestoNotifica();
+        Log.i("Alll", tornaSole);
+        }
 
     }
 

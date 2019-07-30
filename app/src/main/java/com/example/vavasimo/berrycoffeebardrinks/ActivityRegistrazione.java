@@ -133,15 +133,18 @@ public class ActivityRegistrazione extends AppCompatActivity {
             erroreDati();
         }
         String nome = mNomeUtente.getText().toString();
+        String ConfPassword = mConfermaPassword.getText().toString();
         String password = mPassword.getText().toString();
         String email = mEmail.getText().toString();
         if (!nomeValido(nome)){
             Toast.makeText(this, "Nome utente non valido",Toast.LENGTH_LONG).show();
         }else if (!passwordValida(password)){
-            Toast.makeText(this, "NPassword non valida",Toast.LENGTH_LONG).show();
+            Toast.makeText(this, "PLa Password deve contenere più di 7 caratteri per essere valida",Toast.LENGTH_LONG).show();
         }else if (!mailValida(email)){
             Toast.makeText(this, "Email non valida",Toast.LENGTH_LONG).show();
-        }else{
+        }else if (!confermaValida(password,ConfPassword)){
+            Toast.makeText(this, "La conferma della password non combacia con la password",Toast.LENGTH_LONG).show();
+        } else{
             createFirebaseUser(email,password,nome);
         }
 
@@ -171,7 +174,14 @@ public class ActivityRegistrazione extends AppCompatActivity {
     }
 
     private boolean passwordValida(String password){
-        if (password.equals(mPassword.getText().toString()))
+        if (password.length()>7)
+            return true;
+            else
+                return false;
+    }
+
+    private boolean confermaValida(String password, String confPassword){
+        if(password.equals(confPassword))
             return true;
             else
                 return false;

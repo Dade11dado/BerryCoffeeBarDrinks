@@ -11,6 +11,8 @@ import android.support.v7.app.AppCompatActivity;
 import android.text.InputType;
 import android.util.Log;
 import android.view.View;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.Button;
 import android.widget.CompoundButton;
 import android.widget.EditText;
@@ -19,7 +21,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 
-
+import com.example.vavasimo.berrycoffeebardrinks.Model.ButtonInformationSend;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
@@ -31,14 +33,14 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import static com.example.vavasimo.berrycoffeebardrinks.Model.Notification.CHANNEL_1_ID;
 import static com.example.vavasimo.berrycoffeebardrinks.Model.Notification.CHANNEL_2_ID;
 
-
-public class LogInActivity extends AppCompatActivity {
+public class LogInActivity extends AppCompatActivity{
 
     //Dichiarazione variabili  membro
-    private FirebaseAuth mAuth;
     TextView Avviso;
+    private FirebaseAuth mAuth;
     EditText mEmail;
     EditText mPassword;
     FirebaseUser user;
@@ -47,7 +49,7 @@ public class LogInActivity extends AppCompatActivity {
     Switch ShowPassword;
     FirebaseDatabase mDatabase;
     DatabaseReference myRef;
-    String testo;
+   String provaNotifica;
     NotificationManagerCompat notificationManager;
     private int notificationID2 = 0;
 
@@ -57,9 +59,9 @@ public class LogInActivity extends AppCompatActivity {
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        notificationManager = NotificationManagerCompat.from(this);
-        Avviso = (TextView)findViewById(R.id.AvvisoTv);
         setContentView(R.layout.activity_login);
+        notificationManager = NotificationManagerCompat.from(this);
+        Avviso= (TextView)findViewById(R.id.AvvisoTv);
         //Inizializzazione FirebaseAuth
         mAuth=FirebaseAuth.getInstance();
         //Inizializzazione variabili
@@ -73,10 +75,10 @@ public class LogInActivity extends AppCompatActivity {
         myRef.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                String value = dataSnapshot.child("testoNotifica").getValue(String.class);
-                Log.i ("Testo", value);
-                Avviso.setText(value);
-                testo=value;
+                ButtonInformationSend buttonInformationSend = dataSnapshot.getValue(ButtonInformationSend.class);
+                Log.i("notifica", buttonInformationSend.getTestoNotifica());
+                creaNotifica(buttonInformationSend);
+                try{Avviso.setText(buttonInformationSend.getTestoNotifica());}catch(NullPointerException e){Log.i("AHAHAHAAH","SFOLLO");}
 
             }
 
@@ -85,6 +87,7 @@ public class LogInActivity extends AppCompatActivity {
 
             }
         });
+
 
 
                 ShowPassword.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
@@ -96,16 +99,15 @@ public class LogInActivity extends AppCompatActivity {
                             mPassword.setInputType(129);
                         }
                     }
-                });
-                creaNotifica();
+                    });
     }
+
 
     @Override
     protected void onStart() {
         super.onStart();
         FirebaseUser currentUser = mAuth.getCurrentUser();
         updateUI(currentUser);
-        creaNotifica();
     }
 
     private void updateUI(FirebaseUser currentUser) {
@@ -180,24 +182,26 @@ public class LogInActivity extends AppCompatActivity {
         startActivity(Intent1);
     }
 
-    public void creaNotifica(){
-
-        Intent intent = new Intent (this, LogInActivity.class);
+    public void creaNotifica(ButtonInformationSend testo){
+        Intent intent = new Intent(this, LogInActivity.class);
         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK|Intent.FLAG_ACTIVITY_CLEAR_TASK);
-
-        PendingIntent pendingIntent = PendingIntent.getActivity(this, 0,intent,0);
-
+        PendingIntent pendingIntent = PendingIntent.getActivity(this,0,intent,0);
         NotificationCompat.Builder builder = new NotificationCompat.Builder(this, CHANNEL_2_ID)
-                .setSmallIcon(R.drawable.berry_icon)
-                .setContentTitle("Berry Coffee Bar & Drinks")
-                .setContentText(testo)
-                .setPriority(NotificationCompat.PRIORITY_DEFAULT)
+                .setSmallIcon(R.drawable.berry_icon_tr)
+                .setContentTitle("Berry Coffee Bar And Drinks")
+                .setContentText(testo.getTestoNotifica())
+                .setPriority(NotificationCompat.PRIORITY_HIGH)
                 .setContentIntent(pendingIntent)
                 .setAutoCancel(true)
-                .setStyle(new NotificationCompat.BigTextStyle().bigText(testo));
+                .setStyle(new NotificationCompat.BigTextStyle().bigText(testo.getTestoNotifica()));
         notificationManager.notify(notificationID2,builder.build());
+        Log.i("Aiuto","La notifica funziona");
 
-}}
+    }
+
+
+
+    }
 
 
 

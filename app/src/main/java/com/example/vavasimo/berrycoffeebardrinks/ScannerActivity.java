@@ -1,9 +1,11 @@
 package com.example.vavasimo.berrycoffeebardrinks;
 
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.widget.Button;
@@ -111,8 +113,25 @@ public class ScannerActivity extends AppCompatActivity implements View.OnClickLi
 
     public void InviaNotifica(View view){
         notifica = editTextNotifica.getText().toString();
+        if (notifica.length()>0){
         Log.i("Notifica",notifica);
         ButtonInformationSend data = new ButtonInformationSend(notifica);
         myRef.setValue(data);
+        AlertPositive("Invio notifica riuscito","Invio della notifica  riuscito verrà inviata ora a tutti i clienti");
+        editTextNotifica.setText("");}else{AlertPositive("ERRORE","Inserire del teso prima di inviare la notifica");}
+    }
+
+    public void AlertPositive(String titolo, String messaggio){
+        AlertDialog.Builder miaAlert = new AlertDialog.Builder(this);
+        miaAlert.setTitle(titolo)
+                .setMessage(messaggio)
+                .setPositiveButton("ok", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+
+                    }
+                });
+        AlertDialog alert = miaAlert.create();
+        alert.show();
     }
 }

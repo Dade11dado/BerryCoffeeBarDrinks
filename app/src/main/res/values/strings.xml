@@ -46,4 +46,9 @@
     <string name="btn2">btn2</string>
     <string name="btn1">btn1</string>
     <string name="btn9">btn9</string>
+    <string name="chn1name">Omaggi</string>
+    <string name="chn1des">Aperitivi in omaggio</string>
+    <string name="chn2name">Informazioni</string>
+    <string name="chn2des">Ricevi informazioni</string>
+
 </resources>

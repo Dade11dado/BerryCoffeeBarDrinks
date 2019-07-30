@@ -399,7 +399,7 @@
         android:orientation="horizontal"
         app:layout_constraintGuide_percent="0.87" />
 
-    <TextView
+   <TextView
         android:id="@+id/AvvisoTv"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -407,9 +407,15 @@
         android:layout_marginTop="8dp"
         android:layout_marginEnd="8dp"
         android:layout_marginBottom="8dp"
+        android:fontFamily="sans-serif"
+        android:text="Berry Coffee Bar Drinks"
+        android:textAppearance="@style/TextAppearance.AppCompat.Body2"
+        android:textColor="@color/colorPrimaryDark"
+        android:textSize="20sp"
+        android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/guideline11"
-        app:layout_constraintStart_toStartOf="@+id/guideline9"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="@+id/guideline64" />
 
 

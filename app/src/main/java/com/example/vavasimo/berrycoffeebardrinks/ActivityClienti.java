@@ -1,12 +1,9 @@
 package com.example.vavasimo.berrycoffeebardrinks;
 
-import android.app.NotificationChannel;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.graphics.Bitmap;
-import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -16,13 +13,11 @@ import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.vavasimo.berrycoffeebardrinks.Model.ButtonInformation;
-import com.example.vavasimo.berrycoffeebardrinks.Model.Notification;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
@@ -34,10 +29,8 @@ import com.google.zxing.BarcodeFormat;
 import com.google.zxing.MultiFormatWriter;
 import com.google.zxing.WriterException;
 import com.google.zxing.common.BitMatrix;
-import com.google.zxing.qrcode.encoder.QRCode;
 import com.journeyapps.barcodescanner.BarcodeEncoder;
 
-import static android.app.Application.getProcessName;
 import static com.example.vavasimo.berrycoffeebardrinks.Model.Notification.CHANNEL_1_ID;
 
 public class ActivityClienti extends AppCompatActivity{
@@ -79,7 +72,6 @@ public class ActivityClienti extends AppCompatActivity{
         img7=findViewById(R.id.img7);
         img8=findViewById(R.id.img8);
         img9=findViewById(R.id.img9);
-
         QrCode=(ImageView)findViewById(R.id.QRCode);
         mAuth = FirebaseAuth.getInstance();
         mFirebaseDatabase=FirebaseDatabase.getInstance();
@@ -104,6 +96,7 @@ public class ActivityClienti extends AppCompatActivity{
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 ButtonInformation buttonInformation = dataSnapshot.getValue(ButtonInformation.class);
                 showData(buttonInformation);
+                apeOmaggio=buttonInformation.getApeOmaggio();
             }
 
             @Override
@@ -112,7 +105,7 @@ public class ActivityClienti extends AppCompatActivity{
             }
         });
 
-
+        creaNotifica();
     }
 
         private void showData (ButtonInformation buttonInformation){
@@ -123,125 +116,117 @@ public class ActivityClienti extends AppCompatActivity{
             btn1=true;
             img1.setImageResource(R.drawable.berry_icon);
             Log.i("ApeOmaggio",Integer.toString(contatore));
-            creaNotifica();
+
         } else {
             btn1=false;
             img1.setImageResource(R.drawable.radio_button);
-            creaNotifica();
+
         }
 
         if (buttonInformation.getButton2() == true) {
             btn2=true;
             img2.setImageResource(R.drawable.berry_icon);
             Log.i("ApeOmaggio",Integer.toString(contatore));
-            creaNotifica();
+
         } else {
             btn2=false;
             img2.setImageResource(R.drawable.radio_button);
-            creaNotifica();
+
         }
 
         if (buttonInformation.getButton3() == true) {
             btn3=true;
             img3.setImageResource(R.drawable.berry_icon);
             Log.i("ApeOmaggio",Integer.toString(contatore));
-            creaNotifica();
+
         } else {
             btn3=false;
             img3.setImageResource(R.drawable.radio_button);
-            creaNotifica();
+
         }
 
         if (buttonInformation.getButton4() == true) {
             img4.setImageResource(R.drawable.berry_icon);
             btn4=true;
             Log.i("ApeOmaggio",Integer.toString(contatore));
-            creaNotifica();
+
         } else {
             btn4=false;
             img4.setImageResource(R.drawable.radio_button);
-            creaNotifica();
+
         }
 
         if (buttonInformation.getButton5() == true) {
             img5.setImageResource(R.drawable.berry_icon);
             btn5=true;
             Log.i("ApeOmaggio",Integer.toString(contatore));
-            creaNotifica();
+
         } else {
             btn5=false;
             img5.setImageResource(R.drawable.radio_button);
-            creaNotifica();
+
         }
 
         if (buttonInformation.getButton6() == true) {
             img6.setImageResource(R.drawable.berry_icon);
             btn6=true;
             Log.i("ApeOmaggio",Integer.toString(contatore));
-            creaNotifica();
+
         } else {
             btn6=false;
             img6.setImageResource(R.drawable.radio_button);
-            creaNotifica();
+
         }
 
         if (buttonInformation.getButton7() == true) {
             img7.setImageResource(R.drawable.berry_icon);
             btn7=true;
             Log.i("ApeOmaggio",Integer.toString(contatore));
-            creaNotifica();
+;
         } else {
             btn7=false;
             img7.setImageResource(R.drawable.radio_button);
-            creaNotifica();
+
         }
 
         if (buttonInformation.getButton8() == true) {
             img8.setImageResource(R.drawable.berry_icon);
             btn8=true;
             Log.i("ApeOmaggio",Integer.toString(contatore));
-            creaNotifica();
         } else {
             btn8=false;
             img8.setImageResource(R.drawable.radio_button);
-            creaNotifica();
         }
 
         if (buttonInformation.getButton9() == true) {
             img9.setImageResource(R.drawable.berry_icon);
             btn9=true;
             Log.i("ApeOmaggio",Integer.toString(contatore));
-            creaNotifica();
         } else {
             btn9=false;
             img9.setImageResource(R.drawable.radio_button);
-            creaNotifica();
         }
         ApeOmaggio.setText(Integer.toString(buttonInformation.getApeOmaggio()));}catch(NullPointerException e){
             Toast.makeText(this, "Benvenuto nella tua scheda utente",Toast.LENGTH_LONG).show();
-        }}
+        }
+    creaNotifica();
+    }
 
     private void creaNotifica() {
-        if(sendNotiufication==true){
-            Log.i("NOTIFICHE","la notifica funziona");
-        Intent intent = new Intent (this, ActivityClienti.class);
+        if (sendNotiufication==true){
+        Intent intent = new Intent(this, LogInActivity.class);
         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK|Intent.FLAG_ACTIVITY_CLEAR_TASK);
-        PendingIntent pendingIntent = PendingIntent.getActivity(this, 0, intent ,0);
-
+        PendingIntent pendingIntent = PendingIntent.getActivity(this,0,intent,0);
         NotificationCompat.Builder builder = new NotificationCompat.Builder(this, CHANNEL_1_ID)
-                .setSmallIcon(R.drawable.berry_icon)
-                .setContentTitle("Hai "+ Numero+ " aperitivi in omaggio")
-                .setContentText("Passa al Berry Coffee Bar & Drink e riscuoti il tuo aperitivo in omaggio")
-                .setPriority(NotificationCompat.PRIORITY_DEFAULT)
+                .setSmallIcon(R.drawable.berry_icon_tr)
+                .setContentTitle("Hai "+ apeOmaggio + " aperitivi in omaggio")
+                .setContentText("Passa al berry a riscuotere i tuoi aperitivi")
+                .setPriority(NotificationCompat.PRIORITY_HIGH)
                 .setContentIntent(pendingIntent)
-                .setAutoCancel(true)
-                .setContentIntent(pendingIntent)
-                .setStyle(new NotificationCompat.BigTextStyle()
-                .bigText("Passa al Berry Coffee Bar & Drink e riscuoti il tuo aperitivo in omaggio"));
-
-        notificationManager.notify(notificationID1, builder.build()); }
-
-    }
+                .setAutoCancel(true);
+        notificationManager.notify(notificationID1,builder.build());
+        Log.i("Aiuto","La notifica funziona");
+    }}
 
 
     @Override

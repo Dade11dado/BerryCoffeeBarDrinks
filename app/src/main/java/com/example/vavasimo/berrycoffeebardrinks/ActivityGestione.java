@@ -1,10 +1,13 @@
 package com.example.vavasimo.berrycoffeebardrinks;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.support.annotation.NonNull;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -62,6 +65,7 @@ public class ActivityGestione extends AppCompatActivity {
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 ButtonInformation buttonInformation = dataSnapshot.getValue(ButtonInformation.class);
                 showData(buttonInformation);
+                sommaAperitivi=buttonInformation.getApeOmaggio();
             }
 
             @Override
@@ -330,7 +334,6 @@ public class ActivityGestione extends AppCompatActivity {
              img7.setImageResource(R.drawable.radio_button);
              img8.setImageResource(R.drawable.radio_button);
              img9.setImageResource(R.drawable.radio_button);
-             sendNotification=false;
 
          }
      }
@@ -340,8 +343,33 @@ public class ActivityGestione extends AppCompatActivity {
         myRef.setValue(data);
     }
 
+    public void onBackPressed (){
+        DialogInterface.OnClickListener dialogClickListener = new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                switch (which){
+                    case DialogInterface.BUTTON_POSITIVE:
+                        ButtonInformation data = new ButtonInformation(btn1,btn2,btn3,btn4,btn5,btn6,btn7,btn8,btn9,sommaAperitivi,sendNotification);
+                        myRef.setValue(data);
+                        finish();
+                        break;
 
-}
+                    case DialogInterface.BUTTON_NEGATIVE:
+                        break;
+
+
+                }
+            }
+        };
+
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setMessage("Assicurati di salvare prima di uscire").setPositiveButton("Salva", dialogClickListener)
+                .setNegativeButton("Torna", dialogClickListener).show();
+    }
+    }
+
+
+
 
 
 

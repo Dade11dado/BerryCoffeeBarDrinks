@@ -11,8 +11,6 @@ import android.support.v7.app.AppCompatActivity;
 import android.text.InputType;
 import android.util.Log;
 import android.view.View;
-import android.view.animation.Animation;
-import android.view.animation.AnimationUtils;
 import android.widget.Button;
 import android.widget.CompoundButton;
 import android.widget.EditText;
@@ -33,7 +31,6 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
-import static com.example.vavasimo.berrycoffeebardrinks.Model.Notification.CHANNEL_1_ID;
 import static com.example.vavasimo.berrycoffeebardrinks.Model.Notification.CHANNEL_2_ID;
 
 public class LogInActivity extends AppCompatActivity{
@@ -45,12 +42,10 @@ public class LogInActivity extends AppCompatActivity{
     EditText mPassword;
     FirebaseUser user;
     String tornaSole;
-    String email;
     Button button;
     Switch ShowPassword;
     FirebaseDatabase mDatabase;
     DatabaseReference myRef;
-   String provaNotifica;
     NotificationManagerCompat notificationManager;
     private int notificationID2 = 0;
 
